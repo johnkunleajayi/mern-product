@@ -42,7 +42,7 @@ const Navbar = () => {
             color={textColor}
             textAlign={"center"}
           >
-            <Link to={"/"}>Product Store 🛒</Link>
+            <Link to={"/"}>SoftStore 🛒</Link>
           </Text>
 
           {/* Action Buttons */}
@@ -59,7 +59,7 @@ const Navbar = () => {
                 shadow="md"
               >
                 <PlusSquareIcon fontSize={20} mr={2} />
-                Add Product
+                Add To Store
               </Button>
             </Link>
 
