@@ -42,8 +42,8 @@ const CreatePage = () => {
 
   const bgColor = useColorModeValue("white", "gray.800");
   const inputBg = useColorModeValue("gray.50", "gray.700");
-  const buttonBg = useColorModeValue("blue.500", "orange.400");
-  const buttonHoverBg = useColorModeValue("blue.600", "orange.500");
+  const buttonBg = useColorModeValue("red.500", "red.400");
+  const buttonHoverBg = useColorModeValue("red.600", "red.500");
 
   return (
     <Container maxW="container.sm" py={8}>
@@ -102,8 +102,7 @@ const CreatePage = () => {
               size="lg"
               value={newProduct.image}
               onChange={(e) =>
-                setNewProduct({ ...newProduct, image: e.target.value })
-              }
+                setNewProduct({ ...newProduct, image: e.target.value })}
               _placeholder={{ color: useColorModeValue("gray.500", "gray.300") }}
             />
 
