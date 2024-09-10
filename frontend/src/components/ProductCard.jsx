@@ -121,9 +121,9 @@ const ProductCard = ({ product }) => {
           <IconButton
             icon={<EditIcon />}
             onClick={onOpen}
-            bg="red.500" // Updated to red
+            bg="green.500" // Updated to green
             color="white"
-            _hover={{ bg: "red.600" }} // Updated to red
+            _hover={{ bg: "green.600" }} // Updated to green
             rounded="full"
           />
 
