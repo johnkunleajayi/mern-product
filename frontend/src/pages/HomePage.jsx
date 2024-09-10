@@ -28,7 +28,7 @@ const HomePage = () => {
           bgClip="text"
           textAlign="center"
         >
-          Current Products 🚀
+          Product Catalog
         </Text>
 
         {/* Product Grid */}
@@ -49,14 +49,14 @@ const HomePage = () => {
               fontWeight="bold"
               color={useColorModeValue("gray.500", "gray.300")}
             >
-              No products found 😢{" "}
+              No products in this Catalog{" "}
               <Link to="/create">
                 <Text
                   as="span"
                   color={useColorModeValue("blue.500", "orange.400")}
                   _hover={{ textDecoration: "underline" }}
                 >
-                  Create a product
+                  Showcase Your Products To The World!
                 </Text>
               </Link>
             </Text>
