@@ -17,6 +17,10 @@ const HomePage = () => {
     fetchProducts();
   }, [fetchProducts]);
 
+  const textColor = useColorModeValue("gray.500", "gray.300");
+  const linkHoverColor = useColorModeValue("red.600", "red.400");
+  const linkColor = useColorModeValue("red.500", "red.300");
+
   return (
     <Container maxW="container.xl" py={12}>
       <VStack spacing={8}>
@@ -24,7 +28,7 @@ const HomePage = () => {
         <Text
           fontSize={{ base: "28px", md: "36px" }}
           fontWeight="bold"
-          bgGradient="linear(to-r, orange.400, blue.500)"
+          bgGradient="linear(to-r, red.400, white)"
           bgClip="text"
           textAlign="center"
         >
@@ -47,14 +51,19 @@ const HomePage = () => {
               fontSize="xl"
               textAlign="center"
               fontWeight="bold"
-              color={useColorModeValue("gray.500", "gray.300")}
+              color={textColor}
             >
-              No products in this Catalog{" "}
+              No products in this Catalog.
+              <br />
               <Link to="/create">
                 <Text
                   as="span"
-                  color={useColorModeValue("blue.500", "orange.400")}
-                  _hover={{ textDecoration: "underline" }}
+                  color={linkColor}
+                  _hover={{
+                    color: linkHoverColor,
+                    cursor: "pointer",
+                  }}
+                  transition="color 0.3s"
                 >
                   Showcase Your Products To The World!
                 </Text>
