@@ -18,9 +18,10 @@ const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const isDark = colorMode === "dark";
 
-  const bgColor = useColorModeValue("white", "gray.800"); // Light/dark background for Navbar
-  const textColor = useColorModeValue("black", "white");  // Adjust text color based on mode
-  const buttonBg = useColorModeValue("blue.500", "orange.400"); // Button background color for light/dark modes
+  const bgColor = useColorModeValue("white", "gray.800"); 
+  const textColor = useColorModeValue("black", "white");  
+  const buttonBg = useColorModeValue("red.500", "red.400"); 
+  const buttonHoverBg = useColorModeValue("red.600", "red.500");
 
   return (
     <Box bg={bgColor} shadow="md" py={4}>
@@ -52,7 +53,7 @@ const Navbar = () => {
               <Button
                 bg={buttonBg}
                 color="white"
-                _hover={{ bg: isDark ? "orange.500" : "blue.600" }}
+                _hover={{ bg: buttonHoverBg }}
                 size="lg"
                 px={6}
                 rounded="full"
@@ -68,9 +69,9 @@ const Navbar = () => {
               onClick={toggleColorMode}
               icon={isDark ? <LuSun size="20" /> : <IoMoon size="20" />}
               aria-label="Toggle color mode"
-              bg={isDark ? "orange.400" : "blue.500"}
+              bg={isDark ? "red.400" : "red.500"}
               color="white"
-              _hover={{ bg: isDark ? "orange.500" : "blue.600" }}
+              _hover={{ bg: isDark ? "red.500" : "red.600" }}
               rounded="full"
               shadow="md"
             />
