@@ -18,10 +18,9 @@ const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const isDark = colorMode === "dark";
 
-  const bgColor = useColorModeValue("white", "gray.800"); 
-  const textColor = useColorModeValue("black", "white");  
-  const buttonBg = useColorModeValue("red.500", "red.400"); 
-  const buttonHoverBg = useColorModeValue("red.600", "red.500");
+  const bgColor = useColorModeValue("white", "gray.800"); // Light/dark background for Navbar
+  const textColor = useColorModeValue("red.600", "red.300");  // Adjust text color based on mode
+  const buttonBg = useColorModeValue("red.500", "red.400"); // Button background color for light/dark modes
 
   return (
     <Box bg={bgColor} shadow="md" py={4}>
@@ -39,7 +38,6 @@ const Navbar = () => {
           <Text
             fontSize={{ base: "24px", sm: "30px" }}
             fontWeight={"bold"}
-            textTransform={"uppercase"}
             color={textColor}
             textAlign={"center"}
           >
@@ -53,7 +51,7 @@ const Navbar = () => {
               <Button
                 bg={buttonBg}
                 color="white"
-                _hover={{ bg: buttonHoverBg }}
+                _hover={{ bg: isDark ? "red.500" : "red.600" }}
                 size="lg"
                 px={6}
                 rounded="full"
