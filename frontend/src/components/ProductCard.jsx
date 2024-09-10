@@ -1,12 +1,13 @@
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
   Heading,
   HStack,
-  IconButton,
   Image,
-  Input,
+  Text,
+  useColorModeValue,
+  IconButton,
+  VStack,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -14,68 +15,47 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
-  useColorModeValue,
   useDisclosure,
-  useToast,
-  VStack,
+  useToast
 } from "@chakra-ui/react";
-import { useProductStore } from "../store/product";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 
-const ProductCard = ({ product }) => {
-  const [updatedProduct, setUpdatedProduct] = useState(product);
-
-  const textColor = useColorModeValue("gray.600", "gray.200");
-  const cardBg = useColorModeValue("white", "gray.800");
-  const priceColor = useColorModeValue("orange.500", "orange.300"); // Orange for price
-  const headingColor = useColorModeValue("black", "white"); // Black/white for heading
-
-  const { deleteProduct, updateProduct } = useProductStore();
-  const toast = useToast();
+const PostCard = ({ post }) => {
+  const [updatedPost, setUpdatedPost] = useState(post);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
 
-  const handleDeleteProduct = async (pid) => {
-    const { success, message } = await deleteProduct(pid);
-    if (!success) {
-      toast({
-        title: "Error",
-        description: message,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-    } else {
-      toast({
-        title: "Success",
-        description: message,
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
+  const cardBg = useColorModeValue("white", "gray.800");
+  const textColor = useColorModeValue("gray.600", "gray.200");
+  const headingColor = useColorModeValue("black", "white");
+  const priceColor = useColorModeValue("red.500", "red.300");
+  const buttonBg = useColorModeValue("red.500", "red.400");
+  const buttonHoverBg = useColorModeValue("red.600", "red.500");
+
+  const handleUpdatePost = () => {
+    // Here, you would typically call a function to update the post in the backend.
+    // For now, we're just showing a success message.
+    toast({
+      title: "Post updated.",
+      description: "The post was updated successfully.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+    onClose();
   };
 
-  const handleUpdateProduct = async (pid, updatedProduct) => {
-    const { success, message } = await updateProduct(pid, updatedProduct);
-    onClose();
-    if (!success) {
-      toast({
-        title: "Error",
-        description: message,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-    } else {
-      toast({
-        title: "Success",
-        description: "Product updated successfully",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
+  const handleDeletePost = () => {
+    // Here, you would typically call a function to delete the post from the backend.
+    // For now, we're just showing a success message.
+    toast({
+      title: "Post deleted.",
+      description: "The post was deleted successfully.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
   };
 
   return (
@@ -88,8 +68,8 @@ const ProductCard = ({ product }) => {
       _hover={{ transform: "translateY(-8px)", shadow: "lg" }}
     >
       <Image
-        src={product.image}
-        alt={product.name}
+        src={post.image}
+        alt={post.title}
         h={56}
         w="full"
         objectFit="cover"
@@ -101,80 +81,93 @@ const ProductCard = ({ product }) => {
         <Heading
           as="h3"
           size="lg"
-          mb={3}
           color={headingColor}
-          textTransform="capitalize"
-          fontWeight="semibold"
+          mb={2}
+          fontWeight="bold"
         >
-          {product.name}
+          {post.title}
         </Heading>
 
-        <Text fontWeight="bold" fontSize="2xl" color={priceColor} mb={4}>
-          ${product.price}
+        <Text fontSize="lg" color={priceColor} fontWeight="bold" mb={4}>
+          ${post.price}
         </Text>
 
-        <HStack spacing={3}>
+        <Text color={textColor} mb={4}>
+          {post.description}
+        </Text>
+
+        <HStack spacing={4} justify="end">
           {/* Edit Button */}
           <IconButton
+            aria-label="Edit Post"
             icon={<EditIcon />}
             onClick={onOpen}
-            bg="blue.500"
-            color="white"
-            _hover={{ bg: "blue.600" }}
-            rounded="full"
+            colorScheme="blue"
           />
-
           {/* Delete Button */}
           <IconButton
+            aria-label="Delete Post"
             icon={<DeleteIcon />}
-            onClick={() => handleDeleteProduct(product._id)}
-            bg="red.500"
-            color="white"
-            _hover={{ bg: "red.600" }}
-            rounded="full"
+            onClick={handleDeletePost}
+            colorScheme="red"
           />
         </HStack>
       </Box>
 
-      {/* Update Product Modal */}
+      {/* Modal for Editing Post */}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Update Product</ModalHeader>
+          <ModalHeader>Edit Post</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <VStack spacing={4}>
+              <Text fontSize="lg">Title</Text>
               <Input
-                placeholder="Product Name"
-                name="name"
-                value={updatedProduct.name}
-                onChange={(e) => setUpdatedProduct({ ...updatedProduct, name: e.target.value })}
+                placeholder="Post Title"
+                value={updatedPost.title}
+                onChange={(e) =>
+                  setUpdatedPost({ ...updatedPost, title: e.target.value })
+                }
               />
+              <Text fontSize="lg">Price</Text>
               <Input
                 placeholder="Price"
-                name="price"
                 type="number"
-                value={updatedProduct.price}
-                onChange={(e) => setUpdatedProduct({ ...updatedProduct, price: e.target.value })}
+                value={updatedPost.price}
+                onChange={(e) =>
+                  setUpdatedPost({ ...updatedPost, price: e.target.value })
+                }
               />
+              <Text fontSize="lg">Description</Text>
+              <Input
+                placeholder="Description"
+                value={updatedPost.description}
+                onChange={(e) =>
+                  setUpdatedPost({ ...updatedPost, description: e.target.value })
+                }
+              />
+              <Text fontSize="lg">Image URL</Text>
               <Input
                 placeholder="Image URL"
-                name="image"
-                value={updatedProduct.image}
-                onChange={(e) => setUpdatedProduct({ ...updatedProduct, image: e.target.value })}
+                value={updatedPost.image}
+                onChange={(e) =>
+                  setUpdatedPost({ ...updatedPost, image: e.target.value })
+                }
               />
             </VStack>
           </ModalBody>
-
           <ModalFooter>
             <Button
               colorScheme="blue"
               mr={3}
-              onClick={() => handleUpdateProduct(product._id, updatedProduct)}
+              onClick={handleUpdatePost}
+              bg={buttonBg}
+              _hover={{ bg: buttonHoverBg }}
             >
-              Update
+              Save
             </Button>
-            <Button variant="ghost" onClick={onClose}>
+            <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
           </ModalFooter>
@@ -184,4 +177,4 @@ const ProductCard = ({ product }) => {
   );
 };
 
-export default ProductCard;
+export default PostCard;
